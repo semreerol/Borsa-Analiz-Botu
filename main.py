@@ -56,7 +56,7 @@ def ai_analiz_yap(df):
     if not API_KEY: return "API Key eksik."
 
     genai.configure(api_key=API_KEY)
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-1.5-flash')
 
     top_yukselen = df.head(5).to_string(index=False)
     top_dusen = df.tail(5).to_string(index=False)
