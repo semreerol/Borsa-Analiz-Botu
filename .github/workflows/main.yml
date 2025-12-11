@@ -1,0 +1,40 @@
+name: BIST Günlük Analiz
+
+on:
+  schedule:
+    # Hafta içi her gün TSİ 18:10 (UTC 15:10)
+    - cron: '10 15 * * 1-5'
+  workflow_dispatch: # Manuel tetikleme butonu
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Repo'yu Çek
+        uses: actions/checkout@v4
+
+      - name: Python Kur
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Kütüphaneleri Yükle
+        run: pip install -r requirements.txt
+
+      - name: Analizi Çalıştır
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py
+
+      - name: Raporu Kaydet (Commit)
+        run: |
+          git config --global user.name "Borsa Bot"
+          git config --global user.email "bot@github.com"
+          git add reports/
+          git commit -m "Günlük rapor eklendi" || echo "Değişiklik yok"
+          git push
