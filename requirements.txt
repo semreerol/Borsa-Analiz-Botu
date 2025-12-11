@@ -1,6 +1,7 @@
 yfinance
 pandas
 google-generativeai
-lxml
 requests
+lxml
 html5lib
+beautifulsoup4
