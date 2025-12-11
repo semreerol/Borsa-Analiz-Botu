@@ -1,6 +1,6 @@
 yfinance
 pandas
-google-generativeai
+google-generativeai>=0.7.2
 requests
 lxml
 html5lib
