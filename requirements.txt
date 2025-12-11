@@ -1,0 +1,6 @@
+yfinance
+pandas
+google-generativeai
+lxml
+requests
+html5lib
